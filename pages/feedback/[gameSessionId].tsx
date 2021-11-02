@@ -12,7 +12,8 @@ export const getServerSideProps: Types.Next.GetServerSideProps = async (
   if (!jwt?.sub) {
     return {
       redirect: {
-        destination: '/auth/signin',
+        // https://next-auth.js.org/getting-started/rest-api
+        destination: '/api/auth/signin',
         permanent: false,
       },
     }
