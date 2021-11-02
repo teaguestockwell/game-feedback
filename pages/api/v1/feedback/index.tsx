@@ -16,6 +16,11 @@ const querySchema = yup.object().shape({
   pageSize: yup.number().min(25).max(1000),
 })
 
+// the following is a type before casting to the yup schema
+// aka params.pageSize is still a string
+// to get they type after a yup cast use: yup.TypeOf<typeof schema>
+interface QuerySchema extends yup.Asserts<typeof querySchema> {}
+
 const Route = async (
   req: Types.Next.NextApiRequest,
   res: Types.Next.NextApiResponse
@@ -23,7 +28,7 @@ const Route = async (
   usingMiddleware(req, res, async () => {
     await usingMethods(req, ['GET'])
 
-    const params = req.query as any
+    const params = req.query as QuerySchema
 
     try {
       await querySchema.validate(params)
@@ -53,15 +58,15 @@ const Route = async (
     if (params.createdAtGTE) {
       filters.push({
         createdAt: {
-          gte: new Date(params.createdAt),
+          gte: new Date(params.createdAtGTE),
         },
       })
     }
 
     if (params.updatedAtGTE) {
       filters.push({
-        createdAt: {
-          gte: new Date(params.createdAt),
+        updatedAt: {
+          gte: new Date(params.updatedAtGTE),
         },
       })
     }
@@ -69,15 +74,15 @@ const Route = async (
     if (params.createdAtLTE) {
       filters.push({
         createdAt: {
-          lte: new Date(params.createdAt),
+          lte: new Date(params.createdAtLTE),
         },
       })
     }
 
     if (params.updatedAtLTE) {
       filters.push({
-        createdAt: {
-          lte: new Date(params.updatedAt),
+        updatedAt: {
+          lte: new Date(params.updatedAtLTE),
         },
       })
     }
@@ -91,7 +96,7 @@ const Route = async (
     }
 
     const cursorProps = {
-      take: Number(params.pageSize ?? 25),
+      take: Number(params.pageSize ?? '25'),
     } as any
 
     // no cursor on first query

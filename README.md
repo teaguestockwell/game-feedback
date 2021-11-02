@@ -64,7 +64,7 @@ Mobile Lighthouse: /feedback (client side rendered)
 
 ## Features
 
-- Static, Server Side, and Client side rendering with Next.js. / is statically rendered during build time and can be server by a CDN for lightning fast initial loads. /feedback is client side rendered with server state using react query, and /feedback/[gameSessionId]/edit is rendered on the server to remove a loading state from the client for a better user experience.
+- Static, Server Side, and Client side rendering with Next.js. / is statically rendered during build time and can be server by a CDN for lightning fast initial loads. /feedback is client side rendered with server state using react query, and /feedback/[gameSessionId] is rendered on the server to remove a loading state from the client for a better user experience.
 
 - Users may submit a 1-5 rating with an emoji plus a comment for each session. Multiple players can submit feedback for the same session, but a single player may only submit one feedback per session.
 
@@ -202,8 +202,7 @@ Other endpoints for auth created by [next-auth](https://next-auth.js.org/getting
 
 / - There is not much on here, just some links to the other pages.
 /feedback - View a infinite list of all feedbacks, the UI supports filtering by rating (emoji).
-/feedback/[gameSessionId]/edit - Edit your feedback for a game session.
-/feedback/[gameSessionId]/new - Add feedback for a session.
+/feedback/[gameSessionId] - create / update your feedback for a game session.
 
 ## Limitations
 
